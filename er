@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+echo "Running: day_$1.er"
+echo "----------------------------"
+escript erlang/day_$1.erl
