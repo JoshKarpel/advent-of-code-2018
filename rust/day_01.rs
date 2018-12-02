@@ -10,7 +10,7 @@ fn get_numbers() -> Vec<i64> {
         .expect("reading failed");
 
     contents.trim_end()
-        .split("\n")
+        .lines()
         .map(|x| x.parse::<i64>().unwrap())
         .collect()
 }
