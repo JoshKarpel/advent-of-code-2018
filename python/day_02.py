@@ -6,7 +6,7 @@ def get_ids():
     yield from Path('data/day_02.txt').read_text().strip().split()
 
 
-def day_02_part_1():
+def part_1():
     exactly_two = 0
     exactly_three = 0
     for id in get_ids():
@@ -19,7 +19,7 @@ def day_02_part_1():
     return exactly_two * exactly_three
 
 
-def day_02_part_2():
+def part_2():
     ids = list(get_ids())
     length = len(ids[0])
     for position in range(length):
@@ -32,5 +32,5 @@ def day_02_part_2():
 
 
 if __name__ == '__main__':
-    print(f'Part 1: {day_02_part_1()}')
-    print(f'Part 2: {day_02_part_2()}')
+    print(f'Part 1: {part_1()}')
+    print(f'Part 2: {part_2()}')

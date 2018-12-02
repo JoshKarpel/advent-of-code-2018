@@ -2,27 +2,28 @@ use std::fs::File;
 use std::io::prelude::*;
 use std::collections::HashSet;
 
-fn numbers() -> Vec<i64> {
+fn get_numbers() -> Vec<i64> {
     let mut f = File::open("data/day_01.txt").expect("data not found");
 
     let mut contents = String::new();
     f.read_to_string(&mut contents)
         .expect("reading failed");
 
-    contents.split("\n")
-        .filter_map(|x| x.parse::<i64>().ok())  // empty lines give an error, which gets turned into a None, which gets ignored
+    contents.trim_end()
+        .split("\n")
+        .map(|x| x.parse::<i64>().unwrap())
         .collect()
 }
 
-fn day_01_part_1() -> i64 {
-    numbers().iter().sum()
+fn part_1() -> i64 {
+    get_numbers().iter().sum()
 }
 
-fn day_01_part_2() -> i64 {
+fn part_2() -> i64 {
     let mut sums = HashSet::new();
     let mut sum = 0;
 
-    for n in numbers().iter().cycle() {
+    for n in get_numbers().iter().cycle() {
         sum += n;
         if sums.contains(&sum) {
             return sum;
@@ -35,6 +36,6 @@ fn day_01_part_2() -> i64 {
 
 
 fn main() {
-    println!("Part 1: {}", day_01_part_1());
-    println!("Part 2: {}", day_01_part_2());
+    println!("Part 1: {}", part_1());
+    println!("Part 2: {}", part_2());
 }

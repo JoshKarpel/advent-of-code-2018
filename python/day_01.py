@@ -2,18 +2,18 @@ from pathlib import Path
 import itertools
 
 
-def numbers():
+def get_numbers():
     yield from (int(x) for x in Path('data/day_01.txt').read_text().strip().split())
 
 
-def day_01_part_1():
-    return sum(numbers())
+def part_1():
+    return sum(get_numbers())
 
 
-def day_01_part_2():
+def part_2():
     sums = set()
     sum = 0
-    for n in itertools.cycle(numbers()):
+    for n in itertools.cycle(get_numbers()):
         sum += n
         if sum in sums:
             return sum
@@ -21,5 +21,5 @@ def day_01_part_2():
 
 
 if __name__ == '__main__':
-    print(f'Part 1: {day_01_part_1()}')
-    print(f'Part 2: {day_01_part_2()}')
+    print(f'Part 1: {part_1()}')
+    print(f'Part 2: {part_2()}')
