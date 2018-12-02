@@ -3,7 +3,7 @@ import itertools
 
 
 def numbers():
-    yield from (int(x) for x in Path('data/day_01.txt').read_text().split())
+    yield from (int(x) for x in Path('data/day_01.txt').read_text().strip().split())
 
 
 def day_01_part_1():
