@@ -21,18 +21,18 @@ numbers(Device, Acc) ->
 part_1() -> lists:sum(numbers()).
 
 part_2() ->
-  part_2(numbers(), 0, sets:new()).
+  part_2([], 0, sets:new(), numbers()).
 
-part_2([], Sum, Sums) ->
-  part_2(numbers(), Sum, Sums);
-part_2(Changes, Sum, Sums) ->
+part_2([], Sum, Sums, Numbers) ->
+  part_2(Numbers, Sum, Sums, Numbers);
+part_2(Changes, Sum, Sums, Numbers) ->
   [Head | Tail] = Changes,
   NewSum = Sum + Head,
   case sets:is_element(NewSum, Sums) of
     true -> NewSum;
     false ->
       NewSums = sets:add_element(Sum, Sums),
-      part_2(Tail, NewSum, NewSums)
+      part_2(Tail, NewSum, NewSums, Numbers)
   end.
 
 print_list(List) -> [io:format("~p ", [X]) || X <- List].
