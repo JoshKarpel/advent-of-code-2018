@@ -1,5 +1,5 @@
 from pathlib import Path
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 import re
 import itertools
 import collections
@@ -56,8 +56,27 @@ def get_records():
 
 def part_1():
     records = sorted(get_records())
+    cleaned_records = []
     for r in records:
-        print(r)
+        if r.guard is not None:
+            most_recent_guard = r.guard
+        else:
+            cleaned_records.append(replace(r, guard = most_recent_guard))
+
+    sleeping = []
+    it = iter(cleaned_records)
+    for fall_asleep in it:
+        wake_up = next(it)
+        sleeping.append((fall_asleep.guard, fall_asleep.minute, wake_up.minute))
+
+    sleeping_by_guard = collections.defaultdict(lambda: collections.defaultdict(int))
+    for guard, fall_asleep, wake_up in sleeping:
+        for minute in range(fall_asleep, wake_up + 1):
+            sleeping_by_guard[guard][minute] += 1
+
+    most_sleeping = max(sleeping_by_guard.items(), key = lambda x: sum(x[1].values()))
+    most_slept_minute = max(most_sleeping[1].items(), key = lambda x: x[1])
+    return most_sleeping[0] * most_slept_minute[0]
 
 
 def part_2():
