@@ -27,7 +27,24 @@ def part_1():
 
 
 def part_2():
-    pass
+    original_poly = get_polymer()
+
+    removed_unit_to_len = {}
+
+    units = set(x.lower() for x in original_poly)
+    pairs = list(unit_pairs(units))
+    for removed_unit in units:
+        poly = original_poly.replace(removed_unit, '').replace(removed_unit.upper(), '')
+
+        previous_len = None
+        while len(poly) != previous_len:
+            previous_len = len(poly)
+            for unit_pair in pairs:
+                poly = poly.replace(unit_pair, '')
+
+        removed_unit_to_len[removed_unit] = len(poly)
+
+    return min(removed_unit_to_len.values())
 
 
 if __name__ == '__main__':
