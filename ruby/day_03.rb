@@ -9,8 +9,10 @@ def read_claims
 end
 
 class Claim
-  def initialize(id, x, y, w, h)
-    @id = id
+  attr_reader :claim_id
+
+  def initialize(claim_id, x, y, w, h)
+    @claim_id = claim_id
     @x = x
     @y = y
     @w = w
@@ -18,7 +20,7 @@ class Claim
   end
 
   def to_s
-    "Claim(#{@id}, x = #{@x}, y = #{@y}, w = #{@w}, h = #{@h})"
+    "Claim(##{@claim_id}, x = #{@x}, y = #{@y}, w = #{@w}, h = #{@h})"
   end
 
   REGEX = /^#(\d+)\s@\s(\d+),(\d+):\s(\d+)x(\d+)$/.freeze
@@ -39,7 +41,7 @@ class Claim
 end
 
 def part_one(claims)
-  squares = Hash.new(0)
+  squares = Hash.new 0
   claims.each do |claim|
     claim.squares do |x, y|
       squares[[x, y]] += 1
@@ -49,7 +51,19 @@ def part_one(claims)
 end
 
 def part_two(claims)
-  ;
+  claims_by_square = Hash.new { |h, k| h[k] = [] }
+  claims.each do |claim|
+    claim.squares do |x, y|
+      claims_by_square[[x, y]].push claim
+    end
+  end
+
+  claims.each do |claim|
+    found = claim.squares do |x, y|
+      break false if claims_by_square[[x, y]].size > 1
+    end
+    return claim.claim_id if found
+  end
 end
 
 if $PROGRAM_NAME == __FILE__
