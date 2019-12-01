@@ -2,7 +2,7 @@
 
 require 'pathname'
 
-def read_data
+def read_ids
   (Pathname(__dir__).parent / 'data' / 'day_02.txt').readlines.map(&:chomp)
 end
 
@@ -14,9 +14,9 @@ module Enumerable
   end
 end
 
-def part_one(data)
+def part_one(ids)
   counts = Hash.new(0)
-  data.each do |id|
+  ids.each do |id|
     id.each_char.tally.invert.each do |count, _|
       counts[count] += 1
     end
@@ -24,11 +24,16 @@ def part_one(data)
   counts[2] * counts[3]
 end
 
-def part_two(data)
+def part_two(ids)
+  ids[0].size.times do |position|
+    sliced_ids = ids.map { |s| s[0..position - 1] + s[position + 1..-1] }
+    maybe_exactly_two = sliced_ids.tally.invert[2]
+    return maybe_exactly_two unless maybe_exactly_two.nil?
+  end
 end
 
 if $PROGRAM_NAME == __FILE__
-  data = read_data
-  puts "Part One: #{part_one(data)}"
-  puts "Part Two: #{part_two(data)}"
+  ids = read_ids
+  puts "Part One: #{part_one(ids)}"
+  puts "Part Two: #{part_two(ids)}"
 end

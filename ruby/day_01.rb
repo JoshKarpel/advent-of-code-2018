@@ -3,26 +3,26 @@
 require 'pathname'
 require 'set'
 
-def read_data
+def read_frequencies
   (Pathname(__dir__).parent / 'data' / 'day_01.txt').readlines.map(&:to_i)
 end
 
-def part_one(data)
-  data.sum
+def part_one(frequencies)
+  frequencies.sum
 end
 
 
-def part_two(data)
+def part_two(frequencies)
   seen = Set.new
   curr = 0
-  data.cycle do |f|
+  frequencies.cycle do |f|
     curr += f
     return curr if seen.add?(curr).nil?
   end
 end
 
 if $PROGRAM_NAME == __FILE__
-  data = read_data
+  data = read_frequencies
   puts "Part One: #{part_one(data)}"
   puts "Part Two: #{part_two(data)}"
 end
