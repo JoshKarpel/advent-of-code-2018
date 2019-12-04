@@ -1,0 +1,26 @@
+Metrics/LineLength:
+  Max: 100
+
+Naming/MethodParameterName:
+  Enabled: false
+
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: comma
+
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+
+Layout/CaseIndentation:
+  IndentOneStep: true
+
+Layout/LeadingCommentSpace:
+  Enabled: false
+
+Layout/EndOfLine:
+  Enabled: false
