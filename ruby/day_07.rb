@@ -26,16 +26,12 @@ end
 
 def part_one(instructions)
   deps = dependencies instructions
-  puts deps.to_s
 
   order = []
-  while deps.length.positive? do
-    puts
+  while deps.length.positive?
     ready = (deps.map { |child, parents| child if parents.length.zero? }).compact.sort!.first
-    puts ready.to_s
 
     order << ready
-    puts order.to_s
 
     deps.delete(ready)
     deps.each_value { |parents| parents.delete(ready) }
@@ -44,15 +40,37 @@ def part_one(instructions)
   order.join
 end
 
-def part_two(instructions)
+def part_two(instructions, num_workers)
+  deps = dependencies instructions
+
+  time = 0
+  in_progress = {}
+  while deps.length.positive? || in_progress.length.positive?
+    ready = (deps.map { |child, parents| child if parents.length.zero? }).compact.sort!
+    while in_progress.length < num_workers && ready.length.positive?
+      r = ready.shift
+      deps.delete r
+      in_progress[r] = r.ord - 'A'.ord + 1 + 60
+    end
+
+    in_progress.each do |k, v|
+      next unless (in_progress[k] = v - 1).zero?
+
+      in_progress.delete k
+      deps.each_value { |parents| parents.delete(k) }
+    end
+
+    time += 1
+  end
+
+  time
 end
 
 if $PROGRAM_NAME == __FILE__
   puts 'https://adventofcode.com/2018/day/7'
 
   instructions = read_instructions
-  puts instructions.to_s
 
   puts "Part One: #{part_one(instructions)}"
-  puts "Part Two: #{part_two(instructions)}"
+  puts "Part Two: #{part_two(instructions, 5)}"
 end
