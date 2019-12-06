@@ -2,7 +2,7 @@
 
 require 'pathname'
 
-INSTRUCTION_REGEX = /^Step (.) must be finished before step (.) can begin\.$/
+INSTRUCTION_REGEX = /^Step (.) must be finished before step (.) can begin\.$/.freeze
 
 def read_instructions
   (Pathname(__dir__).parent / 'data' / 'day_07.txt').readlines.map do |line|
